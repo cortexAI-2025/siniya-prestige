@@ -1,0 +1,52 @@
+{
+  "expo": {
+    "name": "Siniya Prestige",
+    "slug": "siniya-prestige",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#022C22"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.siniyaprestige.app",
+      "buildNumber": "1"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#022C22"
+      },
+      "package": "com.siniyaprestige.app",
+      "versionCode": 1,
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-font",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow Siniya Prestige to use your location to find the nearest restaurant."
+        }
+      ]
+    ],
+    "scheme": "siniya-prestige",
+    "extra": {
+      "eas": {
+        "projectId": "siniya-prestige-expo"
+      }
+    }
+  }
+}
