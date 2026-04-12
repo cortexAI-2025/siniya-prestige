@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
-  LayoutDashboard, Users, Package, Map,
+  LayoutDashboard, Users, Package, Map, UtensilsCrossed,
   ChevronRight, ShoppingBag, Settings, LogOut, Menu, X,
 } from 'lucide-react';
 import { cn } from '../../utils/cn';
@@ -11,6 +11,7 @@ const NAV_ITEMS = [
   { path: '/', label: 'لوحة القيادة', labelFr: 'Dashboard', icon: LayoutDashboard, badge: null },
   { path: '/franchisees', label: 'الفرانشايز', labelFr: 'Franchisés', icon: Users, badge: 'pending' },
   { path: '/stock', label: 'المخزون المركزي', labelFr: "Centrale d'Achat", icon: Package, badge: 'stock' },
+  { path: '/menu', label: 'إدارة القائمة', labelFr: 'Gestion du Menu', icon: UtensilsCrossed, badge: null },
   { path: '/heatmap', label: 'خريطة المبيعات', labelFr: 'Carte des Ventes', icon: Map, badge: null },
   { path: '/orders', label: 'الطلبات', labelFr: 'Commandes', icon: ShoppingBag, badge: null },
 ];

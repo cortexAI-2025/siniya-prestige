@@ -170,6 +170,30 @@ export interface TipOption {
   isCustom: boolean;
 }
 
+// ─── Staff (Franchise) ────────────────────────────────────────────────────────
+export type StaffRole = 'manager' | 'chef' | 'server' | 'cashier' | 'barista' | 'delivery';
+
+export interface StaffMember {
+  id: string;
+  restaurantId: string;
+  name: string;
+  nameAr: string;
+  role: StaffRole;
+  phone: string;
+  isActive: boolean;
+  avatar: string;
+  hireDate: Date;
+}
+
+// ─── Opening Hours ────────────────────────────────────────────────────────────
+export type WeekDay = 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
+
+export interface DaySchedule {
+  isOpen: boolean;
+  openTime: string;
+  closeTime: string;
+}
+
 // ─── Navigation Types ─────────────────────────────────────────────────────────
 
 export type RootStackParamList = {
@@ -179,6 +203,9 @@ export type RootStackParamList = {
   OrderConfirmation: { orderId: string };
   ProductDetail: { itemId: string };
   FranchiseDashboard: undefined;
+  MenuManager: undefined;
+  RestaurantSettings: undefined;
+  StaffManagement: undefined;
   Auth: undefined;
 };
 

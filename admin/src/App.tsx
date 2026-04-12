@@ -6,6 +6,8 @@ import { FranchiseeManagement } from './pages/FranchiseeManagement';
 import { StockManagement } from './pages/StockManagement';
 import { SalesHeatmapPage } from './pages/SalesHeatmap';
 import { OrdersPage } from './pages/OrdersPage';
+import { MenuManagement } from './pages/MenuManagement';
+import { RestaurantPage } from './pages/RestaurantPage';
 
 export default function App() {
   return (
@@ -16,6 +18,8 @@ export default function App() {
         <Route path="stock" element={<StockManagement />} />
         <Route path="heatmap" element={<SalesHeatmapPage />} />
         <Route path="orders" element={<OrdersPage />} />
+        <Route path="menu" element={<MenuManagement />} />
+        <Route path="restaurants/:id" element={<RestaurantPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>

@@ -6,6 +6,9 @@ import { CartScreen } from '../screens/CartScreen';
 import { CheckoutScreen } from '../screens/CheckoutScreen';
 import { OrderConfirmationScreen } from '../screens/OrderConfirmationScreen';
 import { FranchiseDashboard } from '../screens/FranchiseDashboard';
+import { MenuManagerScreen } from '../screens/MenuManagerScreen';
+import { RestaurantSettingsScreen } from '../screens/RestaurantSettingsScreen';
+import { StaffManagementScreen } from '../screens/StaffManagementScreen';
 import { ProfileScreen } from '../screens/ProfileScreen';
 import { LoyaltyScreen } from '../screens/LoyaltyScreen';
 import type { RootStackParamList } from '../types';
@@ -46,6 +49,11 @@ export const AppNavigator: React.FC = () => {
         <Stack.Screen name="Profile" component={ProfileScreen} />
         <Stack.Screen name="Loyalty" component={LoyaltyScreen} />
         <Stack.Screen name="FranchiseDashboard" component={FranchiseDashboard} />
+
+        {/* Franchisee management */}
+        <Stack.Screen name="MenuManager" component={MenuManagerScreen} />
+        <Stack.Screen name="RestaurantSettings" component={RestaurantSettingsScreen} />
+        <Stack.Screen name="StaffManagement" component={StaffManagementScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

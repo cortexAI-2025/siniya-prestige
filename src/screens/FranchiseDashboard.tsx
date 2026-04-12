@@ -140,6 +140,39 @@ export const FranchiseDashboard: React.FC = () => {
           <ActivityIndicator color={Colors.emerald} size="large" style={{ marginVertical: 40 }} />
         )}
 
+        {/* Management shortcuts */}
+        <View style={styles.mgmtSection}>
+          <Text style={styles.sectionTitle}>إدارة المطعم</Text>
+          <View style={styles.mgmtGrid}>
+            <TouchableOpacity
+              style={styles.mgmtCard}
+              onPress={() => navigation.navigate('MenuManager')}
+            >
+              <Text style={styles.mgmtIcon}>🍽️</Text>
+              <Text style={styles.mgmtLabel}>القائمة</Text>
+              <Text style={styles.mgmtSub}>تعديل الأطباق والأسعار</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.mgmtCard}
+              onPress={() => navigation.navigate('RestaurantSettings')}
+            >
+              <Text style={styles.mgmtIcon}>🕐</Text>
+              <Text style={styles.mgmtLabel}>أوقات العمل</Text>
+              <Text style={styles.mgmtSub}>الجدول الأسبوعي</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.mgmtCard}
+              onPress={() => navigation.navigate('StaffManagement')}
+            >
+              <Text style={styles.mgmtIcon}>👥</Text>
+              <Text style={styles.mgmtLabel}>الفريق</Text>
+              <Text style={styles.mgmtSub}>إدارة الموظفين</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
         {/* Live orders */}
         <View style={styles.ordersSection}>
           <Text style={styles.sectionTitle}>الطلبات الحية</Text>
@@ -375,6 +408,32 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.montserrat,
     fontSize: FontSizes.xs,
     color: 'rgba(253,250,246,0.75)',
+    textAlign: 'center',
+  },
+  mgmtSection: { gap: Spacing.sm },
+  mgmtGrid: { flexDirection: 'row', gap: Spacing.md },
+  mgmtCard: {
+    flex: 1,
+    backgroundColor: Colors.cardBg,
+    borderRadius: BorderRadius.xl,
+    padding: Spacing.md,
+    alignItems: 'center',
+    ...Shadows.card,
+    borderWidth: 1,
+    borderColor: Colors.separator,
+    gap: 4,
+  },
+  mgmtIcon: { fontSize: 26 },
+  mgmtLabel: {
+    fontFamily: Fonts.montserratSemiBold,
+    fontSize: FontSizes.xs,
+    color: Colors.emerald,
+    textAlign: 'center',
+  },
+  mgmtSub: {
+    fontFamily: Fonts.montserrat,
+    fontSize: 9,
+    color: Colors.textLight,
     textAlign: 'center',
   },
   ordersSection: { gap: Spacing.sm },

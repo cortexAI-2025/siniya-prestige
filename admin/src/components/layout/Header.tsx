@@ -8,6 +8,7 @@ const PAGE_TITLES: Record<string, { ar: string; fr: string; emoji: string }> = {
   '/': { ar: 'لوحة القيادة المركزية', fr: 'Dashboard Central', emoji: '📊' },
   '/franchisees': { ar: 'إدارة الفرانشايز', fr: 'Gestion des Franchisés', emoji: '🏪' },
   '/stock': { ar: 'المخزون المركزي', fr: "Centrale d'Achat", emoji: '📦' },
+  '/menu': { ar: 'إدارة القائمة', fr: 'Gestion du Menu', emoji: '🍽️' },
   '/heatmap': { ar: 'خريطة المبيعات — المغرب', fr: 'Carte Heatmap — Maroc', emoji: '🗺️' },
   '/orders': { ar: 'الطلبات والمعاملات', fr: 'Commandes & Transactions', emoji: '🛍️' },
 };

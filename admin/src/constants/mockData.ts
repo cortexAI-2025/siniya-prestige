@@ -1,5 +1,6 @@
 import {
   Franchisee, StockItem, CityStats, RevenueDataPoint, KPI,
+  AdminMenuItem, MenuCategory, StaffMember, RestaurantHours,
 } from '../types';
 
 // ─── KPIs ────────────────────────────────────────────────────────────────────
@@ -66,5 +67,75 @@ export const MOCK_STOCK: StockItem[] = [
   { id: 's10', nameAr: 'العسل الطبيعي', nameFr: 'Miel naturel', category: 'ingredients', unit: 'kg', currentStock: 22, minStock: 10, maxStock: 50, unitCost: 95, supplier: 'Miel Atlas', status: 'in_stock', lastOrderDate: new Date('2025-01-02'), monthlyConsumption: 15 },
   { id: 's11', nameAr: 'خبز مغربي (دقيق)', nameFr: 'Farine khobz', category: 'ingredients', unit: 'kg', currentStock: 12, minStock: 30, maxStock: 150, unitCost: 8, supplier: 'Meunerie Nationale', status: 'low_stock', lastOrderDate: new Date('2025-01-09'), nextDelivery: new Date('2025-01-16'), monthlyConsumption: 80 },
   { id: 's12', nameAr: 'مناديل سينيا', nameFr: 'Serviettes logo', category: 'packaging', unit: 'unité', currentStock: 3500, minStock: 1000, maxStock: 10000, unitCost: 0.8, supplier: 'PackMa Maroc', status: 'in_stock', lastOrderDate: new Date('2025-01-03'), monthlyConsumption: 2000 },
+];
+
+// ─── Menu Categories ──────────────────────────────────────────────────────────
+export const MOCK_MENU_CATEGORIES: MenuCategory[] = [
+  { id: 'starters', nameAr: 'المقبلات', nameFr: 'Entrées', icon: '🥗', order: 1 },
+  { id: 'mains', nameAr: 'الأطباق الرئيسية', nameFr: 'Plats principaux', icon: '🍖', order: 2 },
+  { id: 'tajines', nameAr: 'الطاجين', nameFr: 'Tajines', icon: '🫕', order: 3 },
+  { id: 'burgers', nameAr: 'البرغر', nameFr: 'Burgers', icon: '🍔', order: 4 },
+  { id: 'pasta', nameAr: 'المعكرونة', nameFr: 'Pâtes', icon: '🍝', order: 5 },
+  { id: 'wraps', nameAr: 'الرول', nameFr: 'Wraps & Tacos', icon: '🌯', order: 6 },
+  { id: 'sides', nameAr: 'الأطباق الجانبية', nameFr: 'Accompagnements', icon: '🍟', order: 7 },
+  { id: 'desserts', nameAr: 'الحلويات', nameFr: 'Desserts', icon: '🍰', order: 8 },
+  { id: 'drinks', nameAr: 'المشروبات', nameFr: 'Boissons', icon: '🥤', order: 9 },
+];
+
+// ─── Menu Items ───────────────────────────────────────────────────────────────
+export const MOCK_MENU_ITEMS: AdminMenuItem[] = [
+  { id: 'item1', nameAr: 'سلطة الأفوكادو والجمبري', nameFr: 'Salade Avocat & Crevettes', descriptionAr: 'سلطة طازجة بالجمبري وشرائح الأفوكادو الكريمية', price: 85, categoryId: 'starters', image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop', isAvailable: true, isFeatured: true, tags: ['صحي', 'خفيف'], preparationTime: 10, allergens: ['crustacés'] },
+  { id: 'item2', nameAr: 'مقبلات المعلق', nameFr: 'Assortiment Marocain', descriptionAr: 'تشكيلة من المقبلات المغربية الأصيلة: الزعلوك، التكتوكة والبيصارة', price: 65, categoryId: 'starters', image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&h=300&fit=crop', isAvailable: true, isFeatured: false, tags: ['مغربي', 'تقليدي'], preparationTime: 8, allergens: [] },
+  { id: 'item3', nameAr: 'شريحة لحم بصوص الفلفل', nameFr: 'Steak Sauce Poivre', descriptionAr: 'شريحة لحم بقري فاخر مطهوة على درجة مثالية', price: 190, categoryId: 'mains', image: 'https://images.unsplash.com/photo-1558030006-450675393462?w=400&h=300&fit=crop', isAvailable: true, isFeatured: true, tags: ['لحم بقري', 'فاخر'], preparationTime: 20, allergens: ['lactose'] },
+  { id: 'item4', nameAr: 'طاجين الدجاج بالزيتون', nameFr: 'Tajine Poulet aux Olives', descriptionAr: 'طاجين دجاج مغربي أصيل بالزيتون والليمون المعصفر', price: 120, categoryId: 'tajines', image: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=400&h=300&fit=crop', isAvailable: true, isFeatured: true, tags: ['مغربي', 'تقليدي'], preparationTime: 30, allergens: [] },
+  { id: 'item5', nameAr: 'طاجين كفتة بالبيض', nameFr: 'Tajine Kefta aux Œufs', descriptionAr: 'كفتة لحم مفروم بالبهارات المغربية مع بيض طازج', price: 95, categoryId: 'tajines', image: 'https://images.unsplash.com/photo-1547592180-85f173990554?w=400&h=300&fit=crop', isAvailable: true, isFeatured: false, tags: ['مغربي'], preparationTime: 25, allergens: ['oeufs'] },
+  { id: 'item6', nameAr: 'البرغر المغربي الفاخر', nameFr: 'Burger Marocain Premium', descriptionAr: 'لحم بقري مشوي مع تتبيلة الأطلسي الخاصة', price: 85, categoryId: 'burgers', image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop', isAvailable: true, isFeatured: true, tags: ['برغر', 'لحم بقري'], preparationTime: 15, allergens: ['gluten', 'lactose'] },
+  { id: 'item7', nameAr: 'برغر الدجاج المقرمش', nameFr: 'Burger Poulet Croustillant', descriptionAr: 'دجاج مقرمش مع صلصة الثوم والأعشاب', price: 70, categoryId: 'burgers', image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&h=300&fit=crop', isAvailable: true, isFeatured: false, tags: ['برغر', 'دجاج'], preparationTime: 12, allergens: ['gluten'] },
+  { id: 'item8', nameAr: 'مكرونة الترافل الأسود', nameFr: 'Pâtes Truffe Noire', descriptionAr: 'معكرونة فيتوشيني بصلصة الكريمة والترافل الأسود', price: 130, categoryId: 'pasta', image: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&h=300&fit=crop', isAvailable: true, isFeatured: true, tags: ['إيطالي', 'كريمي'], preparationTime: 18, allergens: ['gluten', 'lactose'] },
+  { id: 'item9', nameAr: 'شاورما الدجاج المغربية', nameFr: 'Shawarma Poulet Marocain', descriptionAr: 'شاورما دجاج متبلة بأجود البهارات المغربية', price: 190, categoryId: 'wraps', image: 'https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=400&h=300&fit=crop', isAvailable: true, isFeatured: true, tags: ['شاورما', 'دجاج'], preparationTime: 15, allergens: ['gluten'] },
+  { id: 'item10', nameAr: 'تاكوس المغرب', nameFr: 'Tacos du Maroc', descriptionAr: 'تاكوس ضخم محشو بلحم البقر المفروم', price: 130, categoryId: 'wraps', image: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&h=300&fit=crop', isAvailable: true, isFeatured: true, tags: ['تاكوس'], preparationTime: 12, allergens: ['gluten'] },
+  { id: 'item11', nameAr: 'البطاطس المقلية بالتوابل', nameFr: 'Frites Épicées', descriptionAr: 'بطاطس مقلية ذهبية متبلة بمزيج بهارات البيرير', price: 45, categoryId: 'sides', image: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=400&h=300&fit=crop', isAvailable: true, isFeatured: false, tags: ['بطاطس'], preparationTime: 8, allergens: [] },
+  { id: 'item12', nameAr: 'تارت التوت البري', nameFr: 'Tarte Fruits Rouges', descriptionAr: 'تارت كريمي بالتوت البري الطازج', price: 55, categoryId: 'desserts', image: 'https://images.unsplash.com/photo-1488477304112-4944851de03d?w=400&h=300&fit=crop', isAvailable: true, isFeatured: true, tags: ['حلو', 'طازج'], preparationTime: 5, allergens: ['gluten', 'lactose', 'oeufs'] },
+  { id: 'item13', nameAr: 'كنافة بالقشطة', nameFr: 'Kunafa à la Crème', descriptionAr: 'كنافة مغربية بالقشطة الطازجة والعسل الطبيعي', price: 50, categoryId: 'desserts', image: 'https://images.unsplash.com/photo-1519676867240-f03562e64548?w=400&h=300&fit=crop', isAvailable: true, isFeatured: false, tags: ['مغربي', 'تقليدي'], preparationTime: 8, allergens: ['gluten', 'lactose'] },
+  { id: 'item14', nameAr: 'عصير المانجو الطازج', nameFr: 'Jus de Mangue Frais', descriptionAr: 'عصير مانجو طبيعي 100% بدون إضافات', price: 35, categoryId: 'drinks', image: 'https://images.unsplash.com/photo-1546173159-315724a31696?w=400&h=300&fit=crop', isAvailable: true, isFeatured: false, tags: ['عصير', 'طازج'], preparationTime: 3, allergens: [] },
+  { id: 'item15', nameAr: 'أتاي المغربي', nameFr: 'Thé à la Menthe', descriptionAr: 'الشاي المغربي الأصيل بالنعناع الطازج', price: 25, categoryId: 'drinks', image: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&h=300&fit=crop', isAvailable: true, isFeatured: false, tags: ['شاي', 'تقليدي'], preparationTime: 5, allergens: [] },
+];
+
+// ─── Staff ────────────────────────────────────────────────────────────────────
+export const MOCK_STAFF: StaffMember[] = [
+  { id: 'st001', restaurantId: 'fr001', name: 'Karim Boulahiane', nameAr: 'كريم بولهيان', role: 'manager', phone: '+212 661 100 001', hireDate: new Date('2024-01-20'), isActive: true, avatar: 'KB' },
+  { id: 'st002', restaurantId: 'fr001', name: 'Yassine El Amrani', nameAr: 'ياسين العمراني', role: 'chef', phone: '+212 661 100 002', hireDate: new Date('2024-01-20'), isActive: true, avatar: 'YA' },
+  { id: 'st003', restaurantId: 'fr001', name: 'Sara Benchekroun', nameAr: 'سارة بنشقرون', role: 'server', phone: '+212 661 100 003', hireDate: new Date('2024-02-01'), isActive: true, avatar: 'SB' },
+  { id: 'st004', restaurantId: 'fr001', name: 'Hamid Ouali', nameAr: 'حميد أوالي', role: 'cashier', phone: '+212 661 100 004', hireDate: new Date('2024-02-01'), isActive: true, avatar: 'HO' },
+  { id: 'st005', restaurantId: 'fr001', name: 'Nadia Lahrichi', nameAr: 'نادية لحريشي', role: 'server', phone: '+212 661 100 005', hireDate: new Date('2024-03-01'), isActive: false, avatar: 'NL' },
+  { id: 'st006', restaurantId: 'fr002', name: 'Omar Benjelloun', nameAr: 'عمر بنجلون', role: 'manager', phone: '+212 661 200 001', hireDate: new Date('2024-02-14'), isActive: true, avatar: 'OB' },
+  { id: 'st007', restaurantId: 'fr002', name: 'Houda Chraibi', nameAr: 'هدى الشرايبي', role: 'chef', phone: '+212 661 200 002', hireDate: new Date('2024-02-14'), isActive: true, avatar: 'HC' },
+  { id: 'st008', restaurantId: 'fr002', name: 'Amine Bakkali', nameAr: 'أمين البقالي', role: 'server', phone: '+212 661 200 003', hireDate: new Date('2024-03-01'), isActive: true, avatar: 'AB' },
+  { id: 'st009', restaurantId: 'fr003', name: 'Fatine Sekkouri', nameAr: 'فاتن السكوري', role: 'manager', phone: '+212 661 300 001', hireDate: new Date('2024-02-25'), isActive: true, avatar: 'FS' },
+  { id: 'st010', restaurantId: 'fr003', name: 'Mehdi Talbi', nameAr: 'مهدي الطالبي', role: 'chef', phone: '+212 661 300 002', hireDate: new Date('2024-02-25'), isActive: true, avatar: 'MT' },
+  { id: 'st011', restaurantId: 'fr003', name: 'Chaimae Nejjar', nameAr: 'شيماء النجار', role: 'barista', phone: '+212 661 300 003', hireDate: new Date('2024-03-05'), isActive: true, avatar: 'CN' },
+  { id: 'st012', restaurantId: 'fr004', name: 'Soufiane Idrissi', nameAr: 'سفيان الإدريسي', role: 'manager', phone: '+212 661 400 001', hireDate: new Date('2024-03-10'), isActive: true, avatar: 'SI' },
+  { id: 'st013', restaurantId: 'fr004', name: 'Widad Amzil', nameAr: 'وداد أمزيل', role: 'chef', phone: '+212 661 400 002', hireDate: new Date('2024-03-10'), isActive: true, avatar: 'WA' },
+  { id: 'st014', restaurantId: 'fr005', name: 'Khalid Oulhaj', nameAr: 'خالد أولحاج', role: 'manager', phone: '+212 661 500 001', hireDate: new Date('2024-04-08'), isActive: true, avatar: 'KO' },
+  { id: 'st015', restaurantId: 'fr005', name: 'Imane Berrada', nameAr: 'إيمان برادة', role: 'barista', phone: '+212 661 500 002', hireDate: new Date('2024-04-08'), isActive: true, avatar: 'IB' },
+];
+
+// ─── Opening Hours ────────────────────────────────────────────────────────────
+const defaultWeekSchedule = {
+  monday:    { isOpen: true, openTime: '09:00', closeTime: '23:00' },
+  tuesday:   { isOpen: true, openTime: '09:00', closeTime: '23:00' },
+  wednesday: { isOpen: true, openTime: '09:00', closeTime: '23:00' },
+  thursday:  { isOpen: true, openTime: '09:00', closeTime: '23:00' },
+  friday:    { isOpen: true, openTime: '09:00', closeTime: '00:00' },
+  saturday:  { isOpen: true, openTime: '09:00', closeTime: '00:00' },
+  sunday:    { isOpen: true, openTime: '10:00', closeTime: '22:00' },
+};
+
+export const MOCK_RESTAURANT_HOURS: RestaurantHours[] = [
+  { restaurantId: 'fr001', schedule: { ...defaultWeekSchedule, friday: { isOpen: true, openTime: '09:00', closeTime: '00:30' }, saturday: { isOpen: true, openTime: '09:00', closeTime: '00:30' } } },
+  { restaurantId: 'fr002', schedule: { ...defaultWeekSchedule, monday: { isOpen: true, openTime: '10:00', closeTime: '22:00' }, sunday: { isOpen: false, openTime: '10:00', closeTime: '22:00' } } },
+  { restaurantId: 'fr003', schedule: { ...defaultWeekSchedule, friday: { isOpen: true, openTime: '09:00', closeTime: '01:00' }, saturday: { isOpen: true, openTime: '09:00', closeTime: '01:00' } } },
+  { restaurantId: 'fr004', schedule: { ...defaultWeekSchedule, sunday: { isOpen: false, openTime: '10:00', closeTime: '22:00' } } },
+  { restaurantId: 'fr005', schedule: defaultWeekSchedule },
 ];
 

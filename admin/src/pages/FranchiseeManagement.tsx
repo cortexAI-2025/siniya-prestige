@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import {
   CheckCircle, XCircle, Eye, AlertCircle, Filter,
-  MapPin, Phone, Mail, TrendingUp, Award, Search,
+  MapPin, Phone, Mail, TrendingUp, Award, Search, ExternalLink,
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Franchisee, FranchiseeStatus } from '../types';
 import { StatusBadge } from '../components/ui/StatusBadge';
 import { useAdminStore } from '../store/adminStore';
@@ -20,6 +21,7 @@ const STATUS_FILTERS: { value: FranchiseeStatus | 'all'; label: string }[] = [
 ];
 
 export const FranchiseeManagement: React.FC = () => {
+  const navigate = useNavigate();
   const { franchisees, approveFranchisee, rejectFranchisee, suspendFranchisee } = useAdminStore();
   const [statusFilter, setStatusFilter] = useState<FranchiseeStatus | 'all'>('all');
   const [search, setSearch] = useState('');
@@ -91,6 +93,7 @@ export const FranchiseeManagement: React.FC = () => {
               onApprove={() => approveFranchisee(f.id)}
               onReject={() => rejectFranchisee(f.id)}
               onSuspend={() => suspendFranchisee(f.id)}
+              onViewRestaurant={() => navigate(`/restaurants/${f.id}`)}
             />
           ))}
 
@@ -127,7 +130,8 @@ const FranchiseeCard: React.FC<{
   onApprove: () => void;
   onReject: () => void;
   onSuspend: () => void;
-}> = ({ franchisee: f, isSelected, onSelect, onApprove, onReject, onSuspend }) => (
+  onViewRestaurant: () => void;
+}> = ({ franchisee: f, isSelected, onSelect, onApprove, onReject, onSuspend, onViewRestaurant }) => (
   <div
     className={cn(
       'card card-hover p-5 cursor-pointer transition-all border-2',
@@ -220,12 +224,16 @@ const FranchiseeCard: React.FC<{
           <AlertCircle size={14} />
           تعليق
         </button>
+        <button onClick={onViewRestaurant} className="btn-emerald text-xs px-3 py-1.5">
+          <ExternalLink size={14} />
+          إدارة المطعم
+        </button>
         <button
           onClick={onSelect}
           className="btn-outline text-xs px-3 py-1.5"
         >
           <Eye size={14} />
-          التفاصيل
+          ملف
         </button>
       </div>
     )}

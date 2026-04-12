@@ -93,6 +93,60 @@ export interface RevenueDataPoint {
   franchiseFees: number;
 }
 
+// ─── Menu Management ──────────────────────────────────────────────────────────
+export interface MenuCategory {
+  id: string;
+  nameAr: string;
+  nameFr: string;
+  icon: string;
+  order: number;
+}
+
+export interface AdminMenuItem {
+  id: string;
+  nameAr: string;
+  nameFr: string;
+  descriptionAr: string;
+  price: number;
+  categoryId: string;
+  image: string;
+  isAvailable: boolean;
+  isFeatured: boolean;
+  tags: string[];
+  preparationTime: number; // minutes
+  allergens: string[];
+}
+
+// ─── Staff ────────────────────────────────────────────────────────────────────
+export type StaffRole = 'manager' | 'chef' | 'server' | 'cashier' | 'barista' | 'delivery';
+
+export interface StaffMember {
+  id: string;
+  restaurantId: string; // matches franchisee id
+  name: string;
+  nameAr: string;
+  role: StaffRole;
+  phone: string;
+  email?: string;
+  hireDate: Date;
+  isActive: boolean;
+  avatar: string;
+}
+
+// ─── Opening Hours ────────────────────────────────────────────────────────────
+export type WeekDay = 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
+
+export interface DaySchedule {
+  isOpen: boolean;
+  openTime: string;
+  closeTime: string;
+}
+
+export interface RestaurantHours {
+  restaurantId: string;
+  schedule: Record<WeekDay, DaySchedule>;
+}
+
 // ─── Admin User ───────────────────────────────────────────────────────────────
 export interface AdminUser {
   id: string;
