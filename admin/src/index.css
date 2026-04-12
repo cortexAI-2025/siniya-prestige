@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply box-border;
+  }
+
+  html {
+    direction: rtl;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  body {
+    @apply bg-silk text-gray-900 antialiased;
+    min-height: 100vh;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-emerald/20 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-emerald/40;
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-card-bg rounded-2xl shadow-card border border-emerald/5;
+  }
+
+  .card-hover {
+    @apply hover:shadow-card-hover transition-shadow duration-200;
+  }
+
+  .badge-emerald {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald/10 text-emerald;
+  }
+
+  .badge-gold {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-gold-pale text-gold-dark;
+  }
+
+  .badge-green {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-green-50 text-green-700;
+  }
+
+  .badge-red {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-red-50 text-red-700;
+  }
+
+  .badge-yellow {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700;
+  }
+
+  .btn-emerald {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-white bg-emerald-gradient shadow-sm hover:opacity-90 active:scale-95 transition-all;
+  }
+
+  .btn-gold {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-white bg-gold-gradient shadow-gold hover:opacity-90 active:scale-95 transition-all;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-emerald border border-emerald/20 hover:bg-emerald/5 active:scale-95 transition-all;
+  }
+
+  .sidebar-item {
+    @apply flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all;
+  }
+
+  .sidebar-item-active {
+    @apply bg-white/15 text-white;
+  }
+
+  .sidebar-item-inactive {
+    @apply text-white/60 hover:text-white/90 hover:bg-white/10;
+  }
+
+  /* Leaflet overrides */
+  .leaflet-container {
+    @apply rounded-2xl;
+    font-family: 'Inter', sans-serif !important;
+  }
+
+  .leaflet-popup-content-wrapper {
+    @apply rounded-xl shadow-card-hover;
+  }
+}
+
+@layer utilities {
+  .text-gradient-gold {
+    @apply bg-gold-gradient bg-clip-text text-transparent;
+  }
+
+  .text-gradient-emerald {
+    @apply bg-emerald-gradient bg-clip-text text-transparent;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.35s ease-out both;
+  }
+}
