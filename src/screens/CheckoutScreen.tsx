@@ -17,7 +17,6 @@ import { Fonts, FontSizes, Spacing, BorderRadius, Shadows } from '../constants/t
 import { formatPrice } from '../utils/formatters';
 import {
   calculateTip,
-  calculateZakat,
   calculateLoyaltyPoints,
 } from '../utils/calculations';
 import { Button } from '../components/ui/Button';
@@ -62,7 +61,6 @@ export const CheckoutScreen: React.FC = () => {
       : TIP_OPTIONS.find((t) => t.id === selectedTip)?.percentage ?? 0;
   const tipAmount = calculateTip(subtotal, tipPercent);
   const total = subtotal + tipAmount;
-  const zakatAmount = calculateZakat(subtotal);
   const pointsToEarn = calculateLoyaltyPoints(total);
 
   const handlePlaceOrder = async () => {
@@ -211,14 +209,6 @@ export const CheckoutScreen: React.FC = () => {
           {tipAmount > 0 && <SummaryLine label="الإكرامية" value={formatPrice(tipAmount)} />}
           <View style={styles.separator} />
           <SummaryLine label="الإجمالي" value={formatPrice(total)} isBold />
-
-          {/* Zakat */}
-          <View style={styles.zakatBanner}>
-            <Text style={styles.zakatEmoji}>🌙</Text>
-            <Text style={styles.zakatText}>
-              {`2.5% من أرباح هذا الطلب (${formatPrice(zakatAmount)}) ستُوجَّه لحساب زكاة المال`}
-            </Text>
-          </View>
 
           {/* Loyalty preview */}
           <View style={styles.loyaltyPreview}>
@@ -477,26 +467,6 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: Colors.separator,
     marginVertical: Spacing.sm,
-  },
-  zakatBanner: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    backgroundColor: 'rgba(2,44,34,0.05)',
-    borderRadius: BorderRadius.md,
-    padding: Spacing.md,
-    marginTop: Spacing.md,
-    gap: Spacing.sm,
-    borderWidth: 1,
-    borderColor: 'rgba(2,44,34,0.1)',
-  },
-  zakatEmoji: { fontSize: 18 },
-  zakatText: {
-    flex: 1,
-    fontFamily: Fonts.montserrat,
-    fontSize: 12,
-    color: Colors.emerald,
-    textAlign: 'right',
-    lineHeight: 18,
   },
   loyaltyPreview: {
     alignItems: 'center',

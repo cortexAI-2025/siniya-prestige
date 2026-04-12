@@ -8,7 +8,6 @@
  * 2. onOrderCreated                — Déclenché à chaque nouvelle commande
  * 3. onOrderStatusUpdate           — Notifie le client lors du changement de statut
  * 4. calculateLoyaltyPoints        — Attribue les points de fidélité
- * 5. calculateZakat                — Alloue 2.5% au fonds Zakat
  */
 
 import * as functions from 'firebase-functions';
@@ -19,7 +18,6 @@ const db = admin.firestore();
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 const FRANCHISE_FEE_RATE = 0.05;   // 5% du bénéfice net
-const ZAKAT_RATE = 0.025;          // 2.5% du bénéfice net
 const LOYALTY_RATE = 10;           // 10 MAD = 1 point
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -43,7 +41,6 @@ interface FranchiseMonthlyReport {
   totalOrders: number;
   netProfit: number;
   franchiseFee: number;
-  zakatContribution: number;
   generatedAt: admin.firestore.Timestamp;
 }
 
@@ -91,7 +88,6 @@ export const calculateMonthlyFranchiseFee = functions.pubsub
       const profitMargin = restaurant.profitMarginRate ?? 0.40;
       const netProfit = totalRevenue * profitMargin;
       const franchiseFee = parseFloat((netProfit * FRANCHISE_FEE_RATE).toFixed(2));
-      const zakatContribution = parseFloat((netProfit * ZAKAT_RATE).toFixed(2));
 
       const monthNames = [
         'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
@@ -107,7 +103,6 @@ export const calculateMonthlyFranchiseFee = functions.pubsub
         totalOrders,
         netProfit,
         franchiseFee,
-        zakatContribution,
         generatedAt: admin.firestore.Timestamp.now(),
       };
 
@@ -123,12 +118,11 @@ export const calculateMonthlyFranchiseFee = functions.pubsub
       const restaurantRef = db.collection('restaurants').doc(restaurantDoc.id);
       batch.update(restaurantRef, {
         pendingFranchiseFee: admin.firestore.FieldValue.increment(franchiseFee),
-        pendingZakat: admin.firestore.FieldValue.increment(zakatContribution),
         lastReportDate: admin.firestore.Timestamp.now(),
       });
 
       functions.logger.info(
-        `Restaurant ${restaurantDoc.id}: Revenue=${totalRevenue} MAD, Fee=${franchiseFee} MAD, Zakat=${zakatContribution} MAD`
+        `Restaurant ${restaurantDoc.id}: Revenue=${totalRevenue} MAD, Fee=${franchiseFee} MAD`
       );
     }
 
@@ -157,17 +151,7 @@ export const onOrderCreated = functions.firestore
       'loyaltyAccount.totalOrders': admin.firestore.FieldValue.increment(1),
     });
 
-    // 2. Calculate and record Zakat for this order
-    const zakatAmount = parseFloat((order.subtotal * ZAKAT_RATE).toFixed(2));
-    const zakatRef = db.collection('zakatFund').doc();
-    batch.set(zakatRef, {
-      orderId,
-      restaurantId: order.restaurantId,
-      amount: zakatAmount,
-      createdAt: admin.firestore.Timestamp.now(),
-    });
-
-    // 3. Update restaurant daily stats
+    // 2. Update restaurant daily stats
     const today = new Date().toISOString().split('T')[0];
     const dailyStatsRef = db
       .collection('restaurants')
@@ -188,7 +172,7 @@ export const onOrderCreated = functions.firestore
     await batch.commit();
 
     functions.logger.info(
-      `Order ${orderId}: +${pointsEarned} loyalty points for user ${order.userId}, Zakat: ${zakatAmount} MAD`
+      `Order ${orderId}: +${pointsEarned} loyalty points for user ${order.userId}`
     );
 
     return null;
@@ -303,7 +287,6 @@ export const calculateRealtimeFee = functions.https.onCall(async (data, context)
 
   const netProfit = totalRevenue * 0.40;
   const franchiseFee = parseFloat((netProfit * FRANCHISE_FEE_RATE).toFixed(2));
-  const zakatAmount = parseFloat((netProfit * ZAKAT_RATE).toFixed(2));
 
   return {
     restaurantId,
@@ -312,9 +295,7 @@ export const calculateRealtimeFee = functions.https.onCall(async (data, context)
     totalOrders,
     netProfit,
     franchiseFee,
-    zakatAmount,
     franchiseFeeRate: `${FRANCHISE_FEE_RATE * 100}%`,
-    zakatRate: `${ZAKAT_RATE * 100}%`,
     calculatedAt: new Date().toISOString(),
   };
 });

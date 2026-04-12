@@ -34,7 +34,7 @@ export const RevenueChart: React.FC<RevenueChartProps> = ({ data }) => {
 
   const tabs: { id: ViewMode; label: string }[] = [
     { id: 'revenue', label: 'رقم الأعمال' },
-    { id: 'fees', label: 'الريع والزكاة' },
+    { id: 'fees', label: 'ريع الفرانشايز' },
     { id: 'all', label: 'الكل' },
   ];
 
@@ -71,7 +71,6 @@ export const RevenueChart: React.FC<RevenueChartProps> = ({ data }) => {
             <Tooltip content={<CustomTooltip />} />
             <Legend formatter={(v) => <span className="text-xs text-gray-500">{v}</span>} />
             <Bar dataKey="franchiseFees" name="ريع الفرانشايز" fill="#B45309" radius={[6, 6, 0, 0]} />
-            <Bar dataKey="zakat" name="الزكاة" fill="#F59E0B" radius={[6, 6, 0, 0]} />
           </BarChart>
         ) : (
           <AreaChart data={data}>
@@ -84,10 +83,6 @@ export const RevenueChart: React.FC<RevenueChartProps> = ({ data }) => {
                 <stop offset="5%" stopColor="#B45309" stopOpacity={0.12} />
                 <stop offset="95%" stopColor="#B45309" stopOpacity={0} />
               </linearGradient>
-              <linearGradient id="colorZakat" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#F59E0B" stopOpacity={0.12} />
-                <stop offset="95%" stopColor="#F59E0B" stopOpacity={0} />
-              </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" vertical={false} />
             <XAxis dataKey="month" tick={{ fontSize: 11, fill: '#9CA3AF' }} axisLine={false} tickLine={false} />
@@ -98,7 +93,6 @@ export const RevenueChart: React.FC<RevenueChartProps> = ({ data }) => {
             {view === 'all' && (
               <>
                 <Area type="monotone" dataKey="franchiseFees" name="ريع الفرانشايز" stroke="#B45309" strokeWidth={2} fill="url(#colorFees)" dot={false} activeDot={{ r: 4, fill: '#B45309' }} />
-                <Area type="monotone" dataKey="zakat" name="الزكاة" stroke="#F59E0B" strokeWidth={2} fill="url(#colorZakat)" dot={false} activeDot={{ r: 4, fill: '#F59E0B' }} />
               </>
             )}
           </AreaChart>

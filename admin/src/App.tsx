@@ -5,7 +5,6 @@ import { Dashboard } from './pages/Dashboard';
 import { FranchiseeManagement } from './pages/FranchiseeManagement';
 import { StockManagement } from './pages/StockManagement';
 import { SalesHeatmapPage } from './pages/SalesHeatmap';
-import { ZakatReport } from './pages/ZakatReport';
 import { OrdersPage } from './pages/OrdersPage';
 
 export default function App() {
@@ -16,7 +15,6 @@ export default function App() {
         <Route path="franchisees" element={<FranchiseeManagement />} />
         <Route path="stock" element={<StockManagement />} />
         <Route path="heatmap" element={<SalesHeatmapPage />} />
-        <Route path="zakat" element={<ZakatReport />} />
         <Route path="orders" element={<OrdersPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>

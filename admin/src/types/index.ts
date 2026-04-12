@@ -20,7 +20,6 @@ export interface Franchisee {
   totalOrders: number;
   franchiseFeeOwed: number;
   franchiseeFeePaid: number;
-  zakatContribution: number;
   score: number; // 0-100 performance score
   avatar: string;
   cin: string;
@@ -92,29 +91,6 @@ export interface RevenueDataPoint {
   revenue: number;
   orders: number;
   franchiseFees: number;
-  zakat: number;
-}
-
-// ─── Zakat ────────────────────────────────────────────────────────────────────
-export interface ZakatEntry {
-  id: string;
-  restaurantId: string;
-  restaurantName: string;
-  city: string;
-  amount: number;
-  period: string;
-  status: 'collected' | 'distributed' | 'pending';
-  createdAt: Date;
-}
-
-export interface ZakatDistribution {
-  id: string;
-  recipient: string;
-  amount: number;
-  category: 'food' | 'education' | 'medical' | 'housing';
-  city: string;
-  date: Date;
-  notes: string;
 }
 
 // ─── Admin User ───────────────────────────────────────────────────────────────

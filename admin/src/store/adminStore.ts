@@ -1,21 +1,17 @@
 import { create } from 'zustand';
 import toast from 'react-hot-toast';
-import { Franchisee, StockItem, ZakatEntry } from '../types';
+import { Franchisee, StockItem } from '../types';
 import {
   MOCK_FRANCHISEES,
   MOCK_STOCK,
-  MOCK_ZAKAT_ENTRIES,
   MOCK_KPIS,
   MOCK_REVENUE,
   MOROCCO_CITIES,
-  MOCK_ZAKAT_DISTRIBUTIONS,
 } from '../constants/mockData';
 
 interface AdminStore {
   franchisees: Franchisee[];
   stock: StockItem[];
-  zakatEntries: ZakatEntry[];
-  zakatDistributions: typeof MOCK_ZAKAT_DISTRIBUTIONS;
   kpis: typeof MOCK_KPIS;
   revenue: typeof MOCK_REVENUE;
   cities: typeof MOROCCO_CITIES;
@@ -34,14 +30,11 @@ interface AdminStore {
   // Stats
   getPendingCount: () => number;
   getLowStockCount: () => number;
-  getTotalZakatCollected: () => number;
 }
 
 export const useAdminStore = create<AdminStore>((set, get) => ({
   franchisees: MOCK_FRANCHISEES,
   stock: MOCK_STOCK,
-  zakatEntries: MOCK_ZAKAT_ENTRIES,
-  zakatDistributions: MOCK_ZAKAT_DISTRIBUTIONS,
   kpis: MOCK_KPIS,
   revenue: MOCK_REVENUE,
   cities: MOROCCO_CITIES,
@@ -108,9 +101,4 @@ export const useAdminStore = create<AdminStore>((set, get) => ({
 
   getLowStockCount: () =>
     get().stock.filter((s) => s.status === 'low_stock' || s.status === 'out_of_stock').length,
-
-  getTotalZakatCollected: () =>
-    get().zakatEntries
-      .filter((z) => z.status !== 'pending')
-      .reduce((sum, z) => sum + z.amount, 0),
 }));

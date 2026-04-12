@@ -1,7 +1,6 @@
 // ─── Loyalty ─────────────────────────────────────────────────────────────────
 // 10 DH = 1 loyalty point
 export const LOYALTY_RATE = 10;
-export const ZAKAT_RATE = 0.025; // 2.5%
 export const FRANCHISE_FEE_RATE = 0.05; // 5%
 
 export const calculateLoyaltyPoints = (amount: number): number => {
@@ -10,11 +9,6 @@ export const calculateLoyaltyPoints = (amount: number): number => {
 
 export const pointsToValue = (points: number): number => {
   return points; // 1 point = 1 DH
-};
-
-// ─── Zakat El Maal ────────────────────────────────────────────────────────────
-export const calculateZakat = (amount: number): number => {
-  return parseFloat((amount * ZAKAT_RATE).toFixed(2));
 };
 
 // ─── Franchise Fee ────────────────────────────────────────────────────────────

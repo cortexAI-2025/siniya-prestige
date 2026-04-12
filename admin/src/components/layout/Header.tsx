@@ -9,7 +9,6 @@ const PAGE_TITLES: Record<string, { ar: string; fr: string; emoji: string }> = {
   '/franchisees': { ar: 'إدارة الفرانشايز', fr: 'Gestion des Franchisés', emoji: '🏪' },
   '/stock': { ar: 'المخزون المركزي', fr: "Centrale d'Achat", emoji: '📦' },
   '/heatmap': { ar: 'خريطة المبيعات — المغرب', fr: 'Carte Heatmap — Maroc', emoji: '🗺️' },
-  '/zakat': { ar: 'صندوق الزكاة', fr: 'Fonds Zakat El Maal', emoji: '🌙' },
   '/orders': { ar: 'الطلبات والمعاملات', fr: 'Commandes & Transactions', emoji: '🛍️' },
 };
 

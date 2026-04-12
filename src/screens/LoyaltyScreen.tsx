@@ -123,22 +123,6 @@ export const LoyaltyScreen: React.FC = () => {
           })}
         </View>
 
-        {/* Zakat section */}
-        <LinearGradient
-          colors={[Colors.emeraldDark, Colors.emerald]}
-          style={styles.zakatCard}
-        >
-          <Text style={styles.zakatTitle}>🌙 زكاة المال - الالتزام الأخلاقي</Text>
-          <Text style={styles.zakatText}>
-            في سينيا بريستيج، نؤمن بالبركة في الرزق. 2.5% من صافي أرباح كل طلب توجه تلقائياً لصندوق الزكاة الخاص بنا لدعم المحتاجين في مجتمعنا.
-          </Text>
-          <View style={styles.zakatDivider} />
-          <Text style={styles.zakatAyah}>
-            «خُذْ مِنْ أَمْوَالِهِمْ صَدَقَةً تُطَهِّرُهُمْ وَتُزَكِّيهِمْ بِهَا»
-          </Text>
-          <Text style={styles.zakatAyahRef}>- سورة التوبة، الآية 103</Text>
-        </LinearGradient>
-
         <View style={{ height: 32 }} />
       </ScrollView>
     </View>
@@ -334,41 +318,5 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.montserratSemiBold,
     fontSize: 10,
     color: Colors.white,
-  },
-  zakatCard: {
-    borderRadius: BorderRadius.xl,
-    padding: Spacing.xl,
-    alignItems: 'center',
-    gap: Spacing.sm,
-    ...Shadows.card,
-  },
-  zakatTitle: {
-    fontFamily: Fonts.montserratBold,
-    fontSize: FontSizes.lg,
-    color: Colors.goldShimmer,
-    textAlign: 'center',
-  },
-  zakatText: {
-    fontFamily: Fonts.montserrat,
-    fontSize: FontSizes.sm,
-    color: 'rgba(253,250,246,0.85)',
-    textAlign: 'center',
-    lineHeight: 22,
-  },
-  zakatDivider: {
-    width: 50,
-    height: 1,
-    backgroundColor: Colors.gold,
-  },
-  zakatAyah: {
-    fontFamily: Fonts.montserrat,
-    fontSize: FontSizes.base,
-    color: Colors.goldShimmer,
-    textAlign: 'center',
-  },
-  zakatAyahRef: {
-    fontFamily: Fonts.montserrat,
-    fontSize: FontSizes.xs,
-    color: 'rgba(253,250,246,0.6)',
   },
 });

@@ -26,7 +26,6 @@ const generateMockStats = (restaurantId: string): FranchiseStats => ({
   pendingOrders: 3,
   franchiseFeeOwed: 6375, // 5% of monthly revenue
   netProfit: 63750,
-  zakatAmount: 1593.75, // 2.5% of net profit
 });
 
 const generateMockOrders = (): FranchiseeOrder[] => [

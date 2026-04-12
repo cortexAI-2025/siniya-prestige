@@ -297,7 +297,6 @@ const FranchiseeDetail: React.FC<{
               { label: 'إجمالي', value: formatMAD(f.totalRevenue), color: 'text-emerald' },
               { label: 'الريع المستحق', value: formatMAD(f.franchiseFeeOwed), color: 'text-gold-dark' },
               { label: 'الريع المدفوع', value: formatMAD(f.franchiseeFeePaid), color: 'text-green-600' },
-              { label: 'الزكاة', value: formatMAD(f.zakatContribution), color: 'text-purple-600' },
               { label: 'الطلبات', value: formatNumber(f.totalOrders), color: 'text-blue-600' },
             ].map((item) => (
               <div key={item.label} className="bg-gray-50 rounded-xl p-3 text-right">

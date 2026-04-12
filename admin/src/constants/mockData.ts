@@ -1,6 +1,5 @@
 import {
-  Franchisee, StockItem, CityStats, RevenueDataPoint,
-  ZakatEntry, ZakatDistribution, KPI,
+  Franchisee, StockItem, CityStats, RevenueDataPoint, KPI,
 } from '../types';
 
 // ─── KPIs ────────────────────────────────────────────────────────────────────
@@ -9,24 +8,23 @@ export const MOCK_KPIS: KPI[] = [
   { id: 'k2', labelAr: 'إجمالي الطلبات', labelFr: 'Total Commandes', value: 8420, change: 8.1, changeType: 'increase', icon: '🛍️', unit: '', color: 'gold' },
   { id: 'k3', labelAr: 'الفرانشايز النشطة', labelFr: 'Franchisés Actifs', value: 24, change: 3, changeType: 'increase', icon: '🏪', unit: '', color: 'blue' },
   { id: 'k4', labelAr: 'ريع الفرانشايز', labelFr: 'Redevances', value: 63750, change: 11.9, changeType: 'increase', icon: '💰', unit: 'MAD', color: 'purple' },
-  { id: 'k5', labelAr: 'صندوق الزكاة', labelFr: 'Fonds Zakat', value: 31875, change: 11.9, changeType: 'increase', icon: '🌙', unit: 'MAD', color: 'gold' },
   { id: 'k6', labelAr: 'طلبات معلقة الموافقة', labelFr: 'En attente approbation', value: 7, change: 2, changeType: 'increase', icon: '⏳', unit: '', color: 'red' },
 ];
 
 // ─── Revenue Chart ────────────────────────────────────────────────────────────
 export const MOCK_REVENUE: RevenueDataPoint[] = [
-  { month: 'يناير', revenue: 780000, orders: 5200, franchiseFees: 39000, zakat: 19500 },
-  { month: 'فبراير', revenue: 820000, orders: 5480, franchiseFees: 41000, zakat: 20500 },
-  { month: 'مارس', revenue: 960000, orders: 6400, franchiseFees: 48000, zakat: 24000 },
-  { month: 'أبريل', revenue: 1050000, orders: 7000, franchiseFees: 52500, zakat: 26250 },
-  { month: 'مايو', revenue: 1120000, orders: 7470, franchiseFees: 56000, zakat: 28000 },
-  { month: 'يونيو', revenue: 1180000, orders: 7870, franchiseFees: 59000, zakat: 29500 },
-  { month: 'يوليوز', revenue: 1090000, orders: 7250, franchiseFees: 54500, zakat: 27250 },
-  { month: 'غشت', revenue: 1150000, orders: 7660, franchiseFees: 57500, zakat: 28750 },
-  { month: 'شتنبر', revenue: 1200000, orders: 8000, franchiseFees: 60000, zakat: 30000 },
-  { month: 'أكتوبر', revenue: 1220000, orders: 8130, franchiseFees: 61000, zakat: 30500 },
-  { month: 'نونبر', revenue: 1250000, orders: 8330, franchiseFees: 62500, zakat: 31250 },
-  { month: 'دجنبر', revenue: 1275000, orders: 8420, franchiseFees: 63750, zakat: 31875 },
+  { month: 'يناير', revenue: 780000, orders: 5200, franchiseFees: 39000 },
+  { month: 'فبراير', revenue: 820000, orders: 5480, franchiseFees: 41000 },
+  { month: 'مارس', revenue: 960000, orders: 6400, franchiseFees: 48000 },
+  { month: 'أبريل', revenue: 1050000, orders: 7000, franchiseFees: 52500 },
+  { month: 'مايو', revenue: 1120000, orders: 7470, franchiseFees: 56000 },
+  { month: 'يونيو', revenue: 1180000, orders: 7870, franchiseFees: 59000 },
+  { month: 'يوليوز', revenue: 1090000, orders: 7250, franchiseFees: 54500 },
+  { month: 'غشت', revenue: 1150000, orders: 7660, franchiseFees: 57500 },
+  { month: 'شتنبر', revenue: 1200000, orders: 8000, franchiseFees: 60000 },
+  { month: 'أكتوبر', revenue: 1220000, orders: 8130, franchiseFees: 61000 },
+  { month: 'نونبر', revenue: 1250000, orders: 8330, franchiseFees: 62500 },
+  { month: 'دجنبر', revenue: 1275000, orders: 8420, franchiseFees: 63750 },
 ];
 
 // ─── Cities / Heatmap ────────────────────────────────────────────────────────
@@ -43,15 +41,15 @@ export const MOROCCO_CITIES: CityStats[] = [
 
 // ─── Franchisees ──────────────────────────────────────────────────────────────
 export const MOCK_FRANCHISEES: Franchisee[] = [
-  { id: 'fr001', name: 'Mohammed Alaoui', nameAr: 'محمد العلوي', email: 'alaoui@siniya.ma', phone: '+212 600 123 456', city: 'Casablanca', cityAr: 'الدار البيضاء', address: 'شارع محمد الخامس، الدار البيضاء', localSize: '100m2', status: 'approved', appliedAt: new Date('2024-01-15'), approvedAt: new Date('2024-01-20'), monthlyRevenue: 85000, totalRevenue: 980000, totalOrders: 6530, franchiseFeeOwed: 4250, franchiseeFeePaid: 4000, zakatContribution: 2125, score: 94, avatar: 'MA', cin: 'BK789123', rc: 'RC-CASA-45231' },
-  { id: 'fr002', name: 'Fatima Zahra Benali', nameAr: 'فاطمة الزهراء بنعلي', email: 'benali@siniya.ma', phone: '+212 600 234 567', city: 'Rabat', cityAr: 'الرباط', address: 'شارع أبو عبيدة، أكدال، الرباط', localSize: '60m2', status: 'approved', appliedAt: new Date('2024-02-10'), approvedAt: new Date('2024-02-14'), monthlyRevenue: 66000, totalRevenue: 720000, totalOrders: 4800, franchiseFeeOwed: 3300, franchiseeFeePaid: 3300, zakatContribution: 1650, score: 88, avatar: 'FZ', cin: 'AA234567', rc: 'RC-RAB-32145' },
-  { id: 'fr003', name: 'Youssef El Mansouri', nameAr: 'يوسف المنصوري', email: 'mansouri@siniya.ma', phone: '+212 600 345 678', city: 'Marrakech', cityAr: 'مراكش', address: 'شارع محمد السادس، جليز، مراكش', localSize: '100m2', status: 'approved', appliedAt: new Date('2024-02-20'), approvedAt: new Date('2024-02-25'), monthlyRevenue: 58000, totalRevenue: 640000, totalOrders: 4260, franchiseFeeOwed: 2900, franchiseeFeePaid: 2900, zakatContribution: 1450, score: 91, avatar: 'YM', cin: 'W456789', rc: 'RC-MAR-28967' },
-  { id: 'fr004', name: 'Khadija Tazi', nameAr: 'خديجة الطازي', email: 'tazi.k@siniya.ma', phone: '+212 600 456 789', city: 'Fès', cityAr: 'فاس', address: 'شارع الحسن الثاني، فاس الجديد', localSize: '60m2', status: 'approved', appliedAt: new Date('2024-03-05'), approvedAt: new Date('2024-03-10'), monthlyRevenue: 47000, totalRevenue: 498000, totalOrders: 3320, franchiseFeeOwed: 2350, franchiseeFeePaid: 2000, zakatContribution: 1175, score: 79, avatar: 'KT', cin: 'N678901', rc: 'RC-FES-19823' },
-  { id: 'fr005', name: 'Omar Chaoui', nameAr: 'عمر الشاوي', email: 'chaoui@siniya.ma', phone: '+212 600 567 890', city: 'Agadir', cityAr: 'أكادير', address: 'شارع الأمير سيدي محمد، أكادير', localSize: '100m2', status: 'approved', appliedAt: new Date('2024-04-01'), approvedAt: new Date('2024-04-08'), monthlyRevenue: 48000, totalRevenue: 430000, totalOrders: 2870, franchiseFeeOwed: 2400, franchiseeFeePaid: 2400, zakatContribution: 1200, score: 85, avatar: 'OC', cin: 'JH890123', rc: 'RC-AGA-15674' },
-  { id: 'fr006', name: 'Hasnae Benkirane', nameAr: 'حسناء بنكيران', email: 'benkirane@gmail.com', phone: '+212 600 678 901', city: 'Tanger', cityAr: 'طنجة', address: 'شارع محمد السادس، طنجة المدينة', localSize: '60m2', status: 'pending', appliedAt: new Date('2025-01-10'), monthlyRevenue: 0, totalRevenue: 0, totalOrders: 0, franchiseFeeOwed: 0, franchiseeFeePaid: 0, zakatContribution: 0, score: 0, avatar: 'HB', cin: 'TN123456', rc: 'RC-TNG-PENDING' },
-  { id: 'fr007', name: 'Rachid Squalli', nameAr: 'رشيد السقلي', email: 'squalli@gmail.com', phone: '+212 600 789 012', city: 'Casablanca', cityAr: 'الدار البيضاء', address: 'شارع أنفا، عين الذياب، الدار البيضاء', localSize: '100m2', status: 'pending', appliedAt: new Date('2025-01-12'), monthlyRevenue: 0, totalRevenue: 0, totalOrders: 0, franchiseFeeOwed: 0, franchiseeFeePaid: 0, zakatContribution: 0, score: 0, avatar: 'RS', cin: 'BJ456789', rc: 'RC-CASA-PENDING' },
-  { id: 'fr008', name: 'Zineb Lahlou', nameAr: 'زينب لحلو', email: 'lahlou@gmail.com', phone: '+212 600 890 123', city: 'Rabat', cityAr: 'الرباط', address: 'حي الرياض، الرباط', localSize: '60m2', status: 'pending', appliedAt: new Date('2025-01-14'), monthlyRevenue: 0, totalRevenue: 0, totalOrders: 0, franchiseFeeOwed: 0, franchiseeFeePaid: 0, zakatContribution: 0, score: 0, avatar: 'ZL', cin: 'AA567890', rc: 'RC-RAB-PENDING' },
-  { id: 'fr009', name: 'Amine Filali', nameAr: 'أمين الفيلالي', email: 'filali.a@gmail.com', phone: '+212 600 901 234', city: 'Meknès', cityAr: 'مكناس', address: 'شارع علال الفاسي، مكناس', localSize: '60m2', status: 'rejected', appliedAt: new Date('2024-12-01'), monthlyRevenue: 0, totalRevenue: 0, totalOrders: 0, franchiseFeeOwed: 0, franchiseeFeePaid: 0, zakatContribution: 0, score: 0, avatar: 'AF', cin: 'EE012345', rc: 'RC-MEK-REJ' },
+  { id: 'fr001', name: 'Mohammed Alaoui', nameAr: 'محمد العلوي', email: 'alaoui@siniya.ma', phone: '+212 600 123 456', city: 'Casablanca', cityAr: 'الدار البيضاء', address: 'شارع محمد الخامس، الدار البيضاء', localSize: '100m2', status: 'approved', appliedAt: new Date('2024-01-15'), approvedAt: new Date('2024-01-20'), monthlyRevenue: 85000, totalRevenue: 980000, totalOrders: 6530, franchiseFeeOwed: 4250, franchiseeFeePaid: 4000, score: 94, avatar: 'MA', cin: 'BK789123', rc: 'RC-CASA-45231' },
+  { id: 'fr002', name: 'Fatima Zahra Benali', nameAr: 'فاطمة الزهراء بنعلي', email: 'benali@siniya.ma', phone: '+212 600 234 567', city: 'Rabat', cityAr: 'الرباط', address: 'شارع أبو عبيدة، أكدال، الرباط', localSize: '60m2', status: 'approved', appliedAt: new Date('2024-02-10'), approvedAt: new Date('2024-02-14'), monthlyRevenue: 66000, totalRevenue: 720000, totalOrders: 4800, franchiseFeeOwed: 3300, franchiseeFeePaid: 3300, score: 88, avatar: 'FZ', cin: 'AA234567', rc: 'RC-RAB-32145' },
+  { id: 'fr003', name: 'Youssef El Mansouri', nameAr: 'يوسف المنصوري', email: 'mansouri@siniya.ma', phone: '+212 600 345 678', city: 'Marrakech', cityAr: 'مراكش', address: 'شارع محمد السادس، جليز، مراكش', localSize: '100m2', status: 'approved', appliedAt: new Date('2024-02-20'), approvedAt: new Date('2024-02-25'), monthlyRevenue: 58000, totalRevenue: 640000, totalOrders: 4260, franchiseFeeOwed: 2900, franchiseeFeePaid: 2900, score: 91, avatar: 'YM', cin: 'W456789', rc: 'RC-MAR-28967' },
+  { id: 'fr004', name: 'Khadija Tazi', nameAr: 'خديجة الطازي', email: 'tazi.k@siniya.ma', phone: '+212 600 456 789', city: 'Fès', cityAr: 'فاس', address: 'شارع الحسن الثاني، فاس الجديد', localSize: '60m2', status: 'approved', appliedAt: new Date('2024-03-05'), approvedAt: new Date('2024-03-10'), monthlyRevenue: 47000, totalRevenue: 498000, totalOrders: 3320, franchiseFeeOwed: 2350, franchiseeFeePaid: 2000, score: 79, avatar: 'KT', cin: 'N678901', rc: 'RC-FES-19823' },
+  { id: 'fr005', name: 'Omar Chaoui', nameAr: 'عمر الشاوي', email: 'chaoui@siniya.ma', phone: '+212 600 567 890', city: 'Agadir', cityAr: 'أكادير', address: 'شارع الأمير سيدي محمد، أكادير', localSize: '100m2', status: 'approved', appliedAt: new Date('2024-04-01'), approvedAt: new Date('2024-04-08'), monthlyRevenue: 48000, totalRevenue: 430000, totalOrders: 2870, franchiseFeeOwed: 2400, franchiseeFeePaid: 2400, score: 85, avatar: 'OC', cin: 'JH890123', rc: 'RC-AGA-15674' },
+  { id: 'fr006', name: 'Hasnae Benkirane', nameAr: 'حسناء بنكيران', email: 'benkirane@gmail.com', phone: '+212 600 678 901', city: 'Tanger', cityAr: 'طنجة', address: 'شارع محمد السادس، طنجة المدينة', localSize: '60m2', status: 'pending', appliedAt: new Date('2025-01-10'), monthlyRevenue: 0, totalRevenue: 0, totalOrders: 0, franchiseFeeOwed: 0, franchiseeFeePaid: 0, score: 0, avatar: 'HB', cin: 'TN123456', rc: 'RC-TNG-PENDING' },
+  { id: 'fr007', name: 'Rachid Squalli', nameAr: 'رشيد السقلي', email: 'squalli@gmail.com', phone: '+212 600 789 012', city: 'Casablanca', cityAr: 'الدار البيضاء', address: 'شارع أنفا، عين الذياب، الدار البيضاء', localSize: '100m2', status: 'pending', appliedAt: new Date('2025-01-12'), monthlyRevenue: 0, totalRevenue: 0, totalOrders: 0, franchiseFeeOwed: 0, franchiseeFeePaid: 0, score: 0, avatar: 'RS', cin: 'BJ456789', rc: 'RC-CASA-PENDING' },
+  { id: 'fr008', name: 'Zineb Lahlou', nameAr: 'زينب لحلو', email: 'lahlou@gmail.com', phone: '+212 600 890 123', city: 'Rabat', cityAr: 'الرباط', address: 'حي الرياض، الرباط', localSize: '60m2', status: 'pending', appliedAt: new Date('2025-01-14'), monthlyRevenue: 0, totalRevenue: 0, totalOrders: 0, franchiseFeeOwed: 0, franchiseeFeePaid: 0, score: 0, avatar: 'ZL', cin: 'AA567890', rc: 'RC-RAB-PENDING' },
+  { id: 'fr009', name: 'Amine Filali', nameAr: 'أمين الفيلالي', email: 'filali.a@gmail.com', phone: '+212 600 901 234', city: 'Meknès', cityAr: 'مكناس', address: 'شارع علال الفاسي، مكناس', localSize: '60m2', status: 'rejected', appliedAt: new Date('2024-12-01'), monthlyRevenue: 0, totalRevenue: 0, totalOrders: 0, franchiseFeeOwed: 0, franchiseeFeePaid: 0, score: 0, avatar: 'AF', cin: 'EE012345', rc: 'RC-MEK-REJ' },
 ];
 
 // ─── Stock Items ──────────────────────────────────────────────────────────────
@@ -70,18 +68,3 @@ export const MOCK_STOCK: StockItem[] = [
   { id: 's12', nameAr: 'مناديل سينيا', nameFr: 'Serviettes logo', category: 'packaging', unit: 'unité', currentStock: 3500, minStock: 1000, maxStock: 10000, unitCost: 0.8, supplier: 'PackMa Maroc', status: 'in_stock', lastOrderDate: new Date('2025-01-03'), monthlyConsumption: 2000 },
 ];
 
-// ─── Zakat ────────────────────────────────────────────────────────────────────
-export const MOCK_ZAKAT_ENTRIES: ZakatEntry[] = [
-  { id: 'z1', restaurantId: 'fr001', restaurantName: 'الدار البيضاء المركز', city: 'الدار البيضاء', amount: 2125, period: 'دجنبر 2024', status: 'collected', createdAt: new Date('2025-01-01') },
-  { id: 'z2', restaurantId: 'fr002', restaurantName: 'الرباط أكدال', city: 'الرباط', amount: 1650, period: 'دجنبر 2024', status: 'collected', createdAt: new Date('2025-01-01') },
-  { id: 'z3', restaurantId: 'fr003', restaurantName: 'مراكش جليز', city: 'مراكش', amount: 1450, period: 'دجنبر 2024', status: 'distributed', createdAt: new Date('2025-01-01') },
-  { id: 'z4', restaurantId: 'fr004', restaurantName: 'فاس الجديد', city: 'فاس', amount: 1175, period: 'دجنبر 2024', status: 'pending', createdAt: new Date('2025-01-01') },
-  { id: 'z5', restaurantId: 'fr005', restaurantName: 'أكادير المدينة', city: 'أكادير', amount: 1200, period: 'دجنبر 2024', status: 'collected', createdAt: new Date('2025-01-01') },
-];
-
-export const MOCK_ZAKAT_DISTRIBUTIONS: ZakatDistribution[] = [
-  { id: 'zd1', recipient: 'جمعية إحسان للأسر المعوزة', amount: 5000, category: 'food', city: 'الدار البيضاء', date: new Date('2025-01-05'), notes: 'سلال غذائية لـ 40 أسرة' },
-  { id: 'zd2', recipient: 'مدرسة التضامن الإسلامية', amount: 3000, category: 'education', city: 'مراكش', date: new Date('2025-01-08'), notes: 'مستلزمات مدرسية وكتب' },
-  { id: 'zd3', recipient: 'عيادة الرحمة الخيرية', amount: 2500, category: 'medical', city: 'الرباط', date: new Date('2025-01-10'), notes: 'أدوية وفحوصات طبية' },
-  { id: 'zd4', recipient: 'جمعية بيت المسلم', amount: 1875, category: 'housing', city: 'فاس', date: new Date('2025-01-12'), notes: 'إصلاح مسكن لأسرة محتاجة' },
-];

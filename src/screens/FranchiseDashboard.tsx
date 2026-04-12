@@ -126,8 +126,6 @@ export const FranchiseDashboard: React.FC = () => {
                   </View>
                   <View style={styles.feeRight}>
                     <Text style={styles.feeIcon}>🏛️</Text>
-                    <Text style={styles.zakatLabel}>زكاة المال</Text>
-                    <Text style={styles.zakatValue}>{formatPrice(franchiseStats.zakatAmount)}</Text>
                   </View>
                 </View>
                 <View style={styles.feeNote}>
@@ -367,16 +365,6 @@ const styles = StyleSheet.create({
   },
   feeRight: { alignItems: 'center' },
   feeIcon: { fontSize: 28 },
-  zakatLabel: {
-    fontFamily: Fonts.montserrat,
-    fontSize: FontSizes.xs,
-    color: 'rgba(253,250,246,0.6)',
-  },
-  zakatValue: {
-    fontFamily: Fonts.montserratBold,
-    fontSize: FontSizes.sm,
-    color: Colors.goldShimmer,
-  },
   feeNote: {
     marginTop: Spacing.md,
     padding: Spacing.sm,

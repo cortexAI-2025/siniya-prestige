@@ -82,7 +82,6 @@ export interface Order {
   total: number;
   paymentMethod: PaymentMethod;
   loyaltyPointsEarned: number;
-  zakatAmount: number;
   franchiseFee: number;
   createdAt: Date;
   updatedAt: Date;
@@ -142,7 +141,6 @@ export interface FranchiseStats {
   pendingOrders: number;
   franchiseFeeOwed: number;
   netProfit: number;
-  zakatAmount: number;
 }
 
 export interface FranchiseeOrder {

@@ -72,12 +72,6 @@ service cloud.firestore {
       allow write: if false;  // Cloud Functions only
     }
 
-    // ── Zakat Fund ─────────────────────────────────────────────────────────
-    match /zakatFund/{entryId} {
-      allow read: if isAdmin();
-      allow write: if false;  // Cloud Functions only
-    }
-
     // ── Archived Orders ────────────────────────────────────────────────────
     match /archivedOrders/{orderId} {
       allow read: if isAdmin();

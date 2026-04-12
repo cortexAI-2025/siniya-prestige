@@ -11,7 +11,7 @@ import { format } from 'date-fns';
 import { ar } from 'date-fns/locale';
 
 export const Dashboard: React.FC = () => {
-  const { kpis, revenue, franchisees, stock, zakatEntries, cities } = useAdminStore();
+  const { kpis, revenue, franchisees, stock, cities } = useAdminStore();
 
   const pendingFranchisees = franchisees.filter((f) => f.status === 'pending');
   const lowStockItems = stock.filter((s) => s.status === 'low_stock' || s.status === 'out_of_stock');
@@ -177,32 +177,6 @@ export const Dashboard: React.FC = () => {
         </div>
       </div>
 
-      {/* Zakat overview */}
-      <div className="card overflow-hidden">
-        <div className="bg-emerald-gradient px-6 py-4 flex items-center justify-between">
-          <Link to="/zakat" className="text-gold-shimmer text-xs font-medium flex items-center gap-1 hover:text-gold">
-            تقرير كامل <ArrowLeft size={12} />
-          </Link>
-          <div className="text-right">
-            <h3 className="text-base font-bold text-white">🌙 صندوق الزكاة — دجنبر 2024</h3>
-            <p className="text-xs text-white/50">Fonds Zakat El Maal — Bilan mensuel</p>
-          </div>
-        </div>
-        <div className="p-5 grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[
-            { label: 'إجمالي المحصّل', value: formatMAD(zakatEntries.reduce((s, z) => s + z.amount, 0)), icon: '💰' },
-            { label: 'تم التوزيع', value: formatMAD(zakatEntries.filter((z) => z.status === 'distributed').reduce((s, z) => s + z.amount, 0)), icon: '✅' },
-            { label: 'المتبقي للتوزيع', value: formatMAD(zakatEntries.filter((z) => z.status !== 'distributed').reduce((s, z) => s + z.amount, 0)), icon: '⏳' },
-            { label: 'عدد المستفيدين', value: '127 أسرة', icon: '🤲' },
-          ].map((item) => (
-            <div key={item.label} className="text-center p-3 rounded-xl bg-emerald/5 border border-emerald/10">
-              <div className="text-2xl mb-1">{item.icon}</div>
-              <div className="text-sm font-bold text-emerald">{item.value}</div>
-              <div className="text-xs text-gray-400 mt-0.5">{item.label}</div>
-            </div>
-          ))}
-        </div>
-      </div>
     </div>
   );
 };

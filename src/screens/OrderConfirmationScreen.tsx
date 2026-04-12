@@ -76,24 +76,6 @@ export const OrderConfirmationScreen: React.FC = () => {
             <StatusStep icon="package" label="جاهز للاستلام" pending />
           </View>
 
-          {/* Zakat receipt */}
-          <View style={styles.zakatCard}>
-            <LinearGradient
-              colors={[Colors.emeraldDark, Colors.emerald]}
-              style={styles.zakatGradient}
-            >
-              <Text style={styles.zakatTitle}>🌙 زكاة المال</Text>
-              <Text style={styles.zakatBody}>
-                شكراً لك! ساهمت في دعم مجتمعنا.{'\n'}
-                2.5% من أرباح هذا الطلب ستُوجَّه لصندوق الزكاة.
-              </Text>
-              <View style={styles.zakatDivider} />
-              <Text style={styles.zakatQuote}>
-                «وَأَقِيمُوا الصَّلَاةَ وَآتُوا الزَّكَاةَ»
-              </Text>
-            </LinearGradient>
-          </View>
-
           {/* Loyalty earned */}
           {user && (
             <View style={styles.loyaltyCard}>
@@ -235,42 +217,6 @@ const styles = StyleSheet.create({
     color: Colors.emerald,
     textAlign: 'right',
     marginBottom: Spacing.md,
-  },
-  zakatCard: {
-    borderRadius: BorderRadius.xl,
-    overflow: 'hidden',
-    marginBottom: Spacing.md,
-    ...Shadows.card,
-  },
-  zakatGradient: {
-    padding: Spacing.base,
-    alignItems: 'center',
-  },
-  zakatTitle: {
-    fontFamily: Fonts.montserratBold,
-    fontSize: FontSizes.lg,
-    color: Colors.goldShimmer,
-    marginBottom: Spacing.sm,
-  },
-  zakatBody: {
-    fontFamily: Fonts.montserrat,
-    fontSize: FontSizes.sm,
-    color: Colors.textOnDark,
-    textAlign: 'center',
-    lineHeight: 22,
-    opacity: 0.9,
-  },
-  zakatDivider: {
-    width: 60,
-    height: 1,
-    backgroundColor: Colors.gold,
-    marginVertical: Spacing.md,
-  },
-  zakatQuote: {
-    fontFamily: Fonts.montserrat,
-    fontSize: FontSizes.base,
-    color: Colors.goldShimmer,
-    textAlign: 'center',
   },
   loyaltyCard: {
     backgroundColor: Colors.cardBg,

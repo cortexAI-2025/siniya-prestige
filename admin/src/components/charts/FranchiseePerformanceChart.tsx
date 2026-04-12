@@ -18,7 +18,6 @@ export const FranchiseePerformanceChart: React.FC<PerformanceChartProps> = ({ fr
     { metric: 'الطلبات', ...Object.fromEntries(approved.map((f) => [f.id, (f.totalOrders / 7000) * 100])) },
     { metric: 'الأداء', ...Object.fromEntries(approved.map((f) => [f.id, f.score])) },
     { metric: 'الالتزام بالريع', ...Object.fromEntries(approved.map((f) => [f.id, (f.franchiseeFeePaid / (f.franchiseFeeOwed || 1)) * 100])) },
-    { metric: 'الزكاة', ...Object.fromEntries(approved.map((f) => [f.id, (f.zakatContribution / (f.monthlyRevenue * 0.025 || 1)) * 100])) },
   ];
 
   const COLORS = ['#022C22', '#B45309', '#3B82F6', '#8B5CF6', '#10B981'];

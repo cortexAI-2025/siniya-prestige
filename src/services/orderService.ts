@@ -12,7 +12,7 @@ import {
 } from 'firebase/firestore';
 import { db } from './firebase';
 import { CartItem, Order, PaymentMethod } from '../types';
-import { calculateZakat, calculateLoyaltyPoints, calculateFranchiseFee } from '../utils/calculations';
+import { calculateLoyaltyPoints, calculateFranchiseFee } from '../utils/calculations';
 
 const USE_MOCK = true;
 
@@ -28,7 +28,6 @@ export const orderService = {
   }): Promise<Order> {
     const subtotal = params.items.reduce((sum, item) => sum + item.totalPrice, 0);
     const total = subtotal + params.tip;
-    const zakatAmount = calculateZakat(subtotal);
     const loyaltyPointsEarned = calculateLoyaltyPoints(total);
     const franchiseFee = calculateFranchiseFee(subtotal);
 
@@ -44,7 +43,6 @@ export const orderService = {
       total,
       paymentMethod: params.paymentMethod,
       loyaltyPointsEarned,
-      zakatAmount,
       franchiseFee,
       createdAt: new Date(),
       updatedAt: new Date(),
