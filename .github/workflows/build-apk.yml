@@ -102,48 +102,23 @@ jobs:
           inject kotlin.incremental                     false
           inject android.useAndroidX                    true
 
-      # ── Phase 1 – KSP annotation processing ───────────────────────────────
-      - name: Phase 1 – KSP annotation processing
-        working-directory: android
-        run: |
-          ./gradlew :app:kspDebugKotlin --no-daemon --max-workers=1 \
-            -Dorg.gradle.jvmargs="-Xmx2g -XX:MaxMetaspaceSize=512m -XX:+UseG1GC" \
-            2>&1 | tee /tmp/phase1.log; exit ${PIPESTATUS[0]}
-
-      # ── Phase 2 – Kotlin compilation ───────────────────────────────────────
-      - name: Phase 2 – Kotlin compilation
-        working-directory: android
-        run: |
-          ./gradlew :app:compileDebugKotlin --no-daemon --max-workers=1 \
-            -Dorg.gradle.jvmargs="-Xmx2g -XX:MaxMetaspaceSize=512m -XX:+UseG1GC" \
-            2>&1 | tee /tmp/phase2.log; exit ${PIPESTATUS[0]}
-
-      # ── Phase 3 – AAPT2 resource linking ──────────────────────────────────
-      - name: Phase 3 – AAPT2 resource linking
-        working-directory: android
-        run: |
-          ./gradlew :app:processDebugResources --no-daemon --max-workers=1 \
-            -Dorg.gradle.jvmargs="-Xmx2g -XX:MaxMetaspaceSize=512m -XX:+UseG1GC" \
-            2>&1 | tee /tmp/phase3.log; exit ${PIPESTATUS[0]}
-
-      # ── Phase 4 – Assemble debug APK ──────────────────────────────────────
-      - name: Phase 4 – Assemble debug APK
+      # ── Assemble debug APK ────────────────────────────────────────────────
+      - name: Build debug APK
         working-directory: android
         run: |
           ./gradlew assembleDebug --no-daemon --stacktrace --max-workers=1 \
             -Dorg.gradle.jvmargs="-Xmx2g -XX:MaxMetaspaceSize=512m -XX:+UseG1GC" \
-            2>&1 | tee /tmp/phase4.log; exit ${PIPESTATUS[0]}
+            2>&1 | tee /tmp/build-debug.log; exit ${PIPESTATUS[0]}
 
       - name: Extract real error on failure
         if: failure()
         run: |
-          for log in /tmp/phase*.log; do
-            [ -f "$log" ] || continue
-            echo "════ $log ════"
-            grep -A 10 "Caused by:" "$log" 2>/dev/null | head -40 || true
-            grep -A 10 "What went wrong" "$log" 2>/dev/null | head -30 || true
-            grep -iE "(error:|AAPT|resource.*not found|failed)" "$log" 2>/dev/null | head -20 || true
-          done
+          echo "════ CAUSED BY ════"
+          grep -A 10 "Caused by:" /tmp/build-debug.log 2>/dev/null | head -60 || true
+          echo "════ WHAT WENT WRONG ════"
+          grep -A 10 "What went wrong" /tmp/build-debug.log 2>/dev/null | head -40 || true
+          echo "════ ERRORS ════"
+          grep -iE "^(.*error:|.*AAPT.*error|e:)" /tmp/build-debug.log 2>/dev/null | head -30 || true
 
       - name: Upload debug APK
         uses: actions/upload-artifact@v4
