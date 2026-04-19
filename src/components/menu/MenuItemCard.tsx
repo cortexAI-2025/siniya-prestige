@@ -105,8 +105,8 @@ export const MenuItemCard: React.FC<MenuItemCardProps> = ({ item, onPress }) => 
         {/* Price row */}
         <View style={styles.priceRow}>
           <View style={styles.mimaLogo}>
-            <Text style={styles.mimaText}>Mima</Text>
-            <Text style={styles.mimaSub}>NATURALS</Text>
+            <Text style={styles.mimaText}>SINIYA</Text>
+            <Text style={styles.mimaSub}>PRESTIGE</Text>
           </View>
           <Text style={styles.price}>{formatPrice(item.price)}</Text>
         </View>

@@ -91,8 +91,8 @@ export const MenuScreen: React.FC = () => {
         <View style={styles.logoBlock}>
           {/* Decorative wreath placeholder */}
           <View style={styles.logoWreath}>
-            <Text style={styles.logoText}>Mima</Text>
-            <Text style={styles.logoSub}>NATURALS</Text>
+            <Text style={styles.logoText}>SINIYA</Text>
+            <Text style={styles.logoSub}>PRESTIGE</Text>
           </View>
         </View>
 

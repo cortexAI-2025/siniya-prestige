@@ -67,8 +67,8 @@ export const Header: React.FC<HeaderProps> = ({
           </View>
         ) : (
           <View style={styles.logoContainer}>
-            <Text style={styles.logoText}>Mima</Text>
-            <Text style={styles.logoSub}>NATURALS</Text>
+            <Text style={styles.logoText}>SINIYA</Text>
+            <Text style={styles.logoSub}>PRESTIGE</Text>
           </View>
         )}
 

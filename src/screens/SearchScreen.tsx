@@ -18,7 +18,7 @@ import { MenuItemCard } from '../components/menu/MenuItemCard';
 import { useNavigation } from '@react-navigation/native';
 
 const POPULAR_SEARCHES = [
-  'برغر', 'طاجين', 'شاورما', 'حلويات', 'سلطة', 'مكرونة', 'عصير'
+  'كالجين', 'تريدوس', 'نيمستيلا', 'برغر بلدي', 'فريطوس', 'معرقة', 'سينيا'
 ];
 
 export const SearchScreen: React.FC = () => {
