@@ -1,0 +1,218 @@
+name: CI / Build APK / AAB
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+jobs:
+
+  # ── Build APK / AAB (debug + release) ─────────────────────────────────────
+  build-apk:
+    name: Build APK / AAB
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # ── Node.js + JS deps ──────────────────────────────────────────────────
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install JS dependencies
+        run: npm ci
+
+      # ── Expo prebuild → generates android/ native project ─────────────────
+      - name: Expo prebuild (generate android/)
+        run: npx expo prebuild --platform android --clean --no-install
+        env:
+          # Prevents expo from prompting for an Expo account
+          EXPO_NO_DOTENV: 1
+
+      # ── Java 17 ────────────────────────────────────────────────────────────
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      # ── Gradle (same version as MobixBuild CI) ─────────────────────────────
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '8.6'
+          build-root-directory: android
+          cache-read-only: false
+
+      - name: Regenerate wrapper JAR
+        working-directory: android
+        run: |
+          gradle wrapper --gradle-version 8.6 --no-validate-url
+          chmod +x gradlew
+
+      # google-services.json is required by Firebase SDK at compile time.
+      # We inject a placeholder so the build succeeds without real credentials.
+      - name: Create google-services.json placeholder
+        run: |
+          cat > android/app/google-services.json << 'EOF'
+          {
+            "project_info": {
+              "project_number": "000000000000",
+              "project_id": "siniya-prestige",
+              "storage_bucket": "siniya-prestige.appspot.com"
+            },
+            "client": [
+              {
+                "client_info": {
+                  "mobilesdk_app_id": "1:000000000000:android:0000000000000000",
+                  "android_client_info": { "package_name": "com.siniyaprestige.app" }
+                },
+                "oauth_client": [],
+                "api_key": [{ "current_key": "placeholder_key" }],
+                "services": {
+                  "appinvite_service": { "other_platform_oauth_client": [] }
+                }
+              }
+            ],
+            "configuration_version": "1"
+          }
+          EOF
+
+      - name: Write local.properties
+        run: echo "sdk.dir=$ANDROID_HOME" > android/local.properties
+
+      - name: Accept Android SDK licenses
+        run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses > /dev/null 2>&1 || true
+
+      # ── Inject validated gradle.properties (from MobixBuild CI v22) ────────
+      - name: Stabilise gradle.properties
+        working-directory: android
+        run: |
+          inject() {
+            local k="$1" v="$2"
+            if grep -q "^${k}=" gradle.properties 2>/dev/null; then
+              sed -i "s|^${k}=.*|${k}=${v}|" gradle.properties
+            else
+              echo "${k}=${v}" >> gradle.properties
+            fi
+          }
+          inject org.gradle.daemon                      false
+          inject org.gradle.parallel                    false
+          inject org.gradle.workers.max                 1
+          inject org.gradle.configureondemand           false
+          inject org.gradle.vfs.watch                   false
+          inject kotlin.compiler.execution.strategy     in-process
+          inject kotlin.incremental                     false
+          inject android.useAndroidX                    true
+
+      # ── Phase 1-4 : assembleDebug ──────────────────────────────────────────
+      - name: Phase 1 – KSP annotation processing
+        working-directory: android
+        run: |
+          ./gradlew :app:kspDebugKotlin --no-daemon --max-workers=1 \
+            -Dorg.gradle.jvmargs="-Xmx2g -XX:MaxMetaspaceSize=512m -XX:+UseG1GC" \
+            2>&1 | tee /tmp/phase1.log; exit ${PIPESTATUS[0]}
+
+      - name: Phase 2 – Kotlin compilation
+        working-directory: android
+        run: |
+          ./gradlew :app:compileDebugKotlin --no-daemon --max-workers=1 \
+            -Dorg.gradle.jvmargs="-Xmx2g -XX:MaxMetaspaceSize=512m -XX:+UseG1GC" \
+            2>&1 | tee /tmp/phase2.log; exit ${PIPESTATUS[0]}
+
+      - name: Phase 3 – AAPT2 resource linking
+        working-directory: android
+        run: |
+          ./gradlew :app:processDebugResources --no-daemon --max-workers=1 \
+            -Dorg.gradle.jvmargs="-Xmx2g -XX:MaxMetaspaceSize=512m -XX:+UseG1GC" \
+            2>&1 | tee /tmp/phase3.log; exit ${PIPESTATUS[0]}
+
+      - name: Phase 4 – Assemble debug APK
+        working-directory: android
+        run: |
+          ./gradlew assembleDebug --no-daemon --stacktrace --max-workers=1 \
+            -Dorg.gradle.jvmargs="-Xmx2g -XX:MaxMetaspaceSize=512m -XX:+UseG1GC" \
+            2>&1 | tee /tmp/phase4.log; exit ${PIPESTATUS[0]}
+
+      - name: Extract real error on failure
+        if: failure()
+        run: |
+          for log in /tmp/phase*.log; do
+            echo "════ $log ════"
+            grep -A 10 "Caused by:" "$log" 2>/dev/null | head -40 || true
+            grep -A 10 "What went wrong" "$log" 2>/dev/null | head -30 || true
+            grep -iE "(error:|AAPT|resource.*not found|failed)" "$log" 2>/dev/null | head -20 || true
+          done
+
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: siniya-prestige-debug
+          path: android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+
+      # ── Signed release APK ─────────────────────────────────────────────────
+      - name: Generate CI keystore
+        run: |
+          keytool -genkeypair \
+            -keystore android/app/ci.keystore \
+            -alias     release \
+            -keyalg    RSA \
+            -keysize   2048 \
+            -validity  365 \
+            -storepass ci_password \
+            -keypass   ci_password \
+            -dname     "CN=Siniya Prestige, OU=CI, O=SiniyaPrestige, L=Casablanca, ST=MA, C=MA" \
+            -noprompt
+
+      - name: Build signed release APK
+        working-directory: android
+        run: |
+          ./gradlew assembleRelease --no-daemon --max-workers=1 \
+            "-Pandroid.injected.signing.store.file=${GITHUB_WORKSPACE}/android/app/ci.keystore" \
+            "-Pandroid.injected.signing.store.password=ci_password" \
+            "-Pandroid.injected.signing.key.alias=release" \
+            "-Pandroid.injected.signing.key.password=ci_password" \
+            -Dorg.gradle.jvmargs="-Xmx2g -XX:MaxMetaspaceSize=512m -XX:+UseG1GC"
+
+      - name: Upload signed release APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: siniya-prestige-release-apk
+          path: android/app/build/outputs/apk/release/*.apk
+          if-no-files-found: warn
+
+      # ── Release AAB (Play Store) ───────────────────────────────────────────
+      - name: Build release AAB
+        working-directory: android
+        run: |
+          ./gradlew bundleRelease --no-daemon --max-workers=1 \
+            "-Pandroid.injected.signing.store.file=${GITHUB_WORKSPACE}/android/app/ci.keystore" \
+            "-Pandroid.injected.signing.store.password=ci_password" \
+            "-Pandroid.injected.signing.key.alias=release" \
+            "-Pandroid.injected.signing.key.password=ci_password" \
+            -Dorg.gradle.jvmargs="-Xmx2g -XX:MaxMetaspaceSize=512m -XX:+UseG1GC"
+
+      - name: Upload release AAB
+        uses: actions/upload-artifact@v4
+        with:
+          name: siniya-prestige-release-aab
+          path: android/app/build/outputs/bundle/release/*.aab
+          if-no-files-found: warn
+
+      # ── Build summary ──────────────────────────────────────────────────────
+      - name: Write job summary
+        if: always()
+        run: |
+          echo "## Siniya Prestige — Build Result" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Artifact | Fichier |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|----------|---------|" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Debug APK | \`siniya-prestige-debug\` |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Release APK | \`siniya-prestige-release-apk\` |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Release AAB | \`siniya-prestige-release-aab\` |" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Run #\${{ github.run_number }} · \`${{ github.ref_name }}\` · ${{ github.actor }}" >> "$GITHUB_STEP_SUMMARY"
