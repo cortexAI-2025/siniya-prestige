@@ -15,6 +15,7 @@ import { Fonts, FontSizes, Spacing } from '../../constants/theme';
 import { NumericBadge } from '../ui/Badge';
 import { useCartStore } from '../../store/cartStore';
 import { useNavigation } from '@react-navigation/native';
+import { useLang } from '../../hooks/useLang';
 
 interface HeaderProps {
   showCart?: boolean;
@@ -36,6 +37,7 @@ export const Header: React.FC<HeaderProps> = ({
   const insets = useSafeAreaInsets();
   const navigation = useNavigation<any>();
   const totalItems = useCartStore((s) => s.getTotalItems());
+  const { lang, toggle } = useLang();
 
   const paddingTop = insets.top + (Platform.OS === 'android' ? 8 : 0);
 
@@ -66,10 +68,13 @@ export const Header: React.FC<HeaderProps> = ({
             {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
           </View>
         ) : (
-          <View style={styles.logoContainer}>
+          <TouchableOpacity style={styles.logoContainer} onPress={toggle} activeOpacity={0.8}>
             <Text style={styles.logoText}>SINIYA</Text>
             <Text style={styles.logoSub}>PRESTIGE</Text>
-          </View>
+            <View style={styles.langPill}>
+              <Text style={styles.langPillText}>{lang === 'ar' ? 'FR' : 'ع'}</Text>
+            </View>
+          </TouchableOpacity>
         )}
 
         {/* Right action */}
@@ -129,6 +134,21 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     alignItems: 'center',
+  },
+  langPill: {
+    marginTop: 4,
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    paddingHorizontal: 8,
+    paddingVertical: 2,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.35)',
+  },
+  langPillText: {
+    fontFamily: Fonts.montserratBold,
+    fontSize: 9,
+    color: Colors.goldShimmer,
+    letterSpacing: 1,
   },
   logoText: {
     fontFamily: Fonts.cinzelBold,

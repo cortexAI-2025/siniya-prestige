@@ -16,6 +16,7 @@ import { Fonts, FontSizes, Spacing, BorderRadius, Shadows } from '../../constant
 import { formatPrice } from '../../utils/formatters';
 import { useCartStore } from '../../store/cartStore';
 import { useUserStore } from '../../store/userStore';
+import { useLang } from '../../hooks/useLang';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const CARD_WIDTH = (SCREEN_WIDTH - Spacing.base * 2 - Spacing.sm) / 2;
@@ -34,6 +35,7 @@ export const MenuItemCard: React.FC<MenuItemCardProps> = ({ item, onPress }) => 
 
   const cartCount = getItemCount(item.id);
   const isFavorite = user?.favoriteItems.includes(item.id) ?? false;
+  const { name, desc, isFr } = useLang();
 
   const handleAddToCart = () => {
     addItem(item, 1);
@@ -91,14 +93,14 @@ export const MenuItemCard: React.FC<MenuItemCardProps> = ({ item, onPress }) => 
       {/* Info */}
       <View style={styles.infoContainer}>
         {/* Name */}
-        <Text style={styles.nameAr} numberOfLines={2}>
-          {item.nameAr}
+        <Text style={[styles.nameAr, isFr && styles.textLeft]} numberOfLines={2}>
+          {name(item)}
         </Text>
 
         {/* Description */}
-        {item.descriptionAr ? (
-          <Text style={styles.description} numberOfLines={2}>
-            {item.descriptionAr}
+        {desc(item) ? (
+          <Text style={[styles.description, isFr && styles.textLeft]} numberOfLines={2}>
+            {desc(item)}
           </Text>
         ) : null}
 
@@ -114,7 +116,7 @@ export const MenuItemCard: React.FC<MenuItemCardProps> = ({ item, onPress }) => 
         {/* Add to cart button */}
         <TouchableOpacity style={styles.addButton} onPress={handleAddToCart} activeOpacity={0.8}>
           <Feather name="shopping-bag" size={14} color={Colors.emerald} />
-          <Text style={styles.addButtonText}>أصف إلى الحفية</Text>
+          <Text style={styles.addButtonText}>{isFr ? 'Ajouter' : 'أضف للسلة'}</Text>
         </TouchableOpacity>
       </View>
     </TouchableOpacity>
@@ -212,6 +214,9 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     marginTop: 2,
     lineHeight: 15,
+  },
+  textLeft: {
+    textAlign: 'left',
   },
   priceRow: {
     flexDirection: 'row',

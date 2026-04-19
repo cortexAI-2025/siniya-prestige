@@ -10,6 +10,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Category } from '../../types';
 import { Colors, Gradients } from '../../constants/colors';
 import { Fonts, FontSizes, Spacing, BorderRadius } from '../../constants/theme';
+import { useLang } from '../../hooks/useLang';
 
 interface CategoryFilterProps {
   categories: Category[];
@@ -23,6 +24,7 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
   onSelectCategory,
 }) => {
   const scrollRef = useRef<ScrollView>(null);
+  const { name } = useLang();
 
   return (
     <ScrollView
@@ -55,12 +57,12 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
                 style={styles.tab}
               >
                 <Text style={styles.icon}>{cat.icon}</Text>
-                <Text style={[styles.label, styles.labelSelected]}>{cat.nameAr}</Text>
+                <Text style={[styles.label, styles.labelSelected]}>{name(cat)}</Text>
               </LinearGradient>
             ) : (
               <View style={[styles.tab, styles.tabInactive]}>
                 <Text style={styles.icon}>{cat.icon}</Text>
-                <Text style={styles.label}>{cat.nameAr}</Text>
+                <Text style={styles.label}>{name(cat)}</Text>
               </View>
             )}
           </TouchableOpacity>
