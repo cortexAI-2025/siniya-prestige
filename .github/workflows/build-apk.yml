@@ -107,6 +107,7 @@ jobs:
         working-directory: android
         run: |
           ./gradlew assembleDebug --no-daemon --stacktrace --max-workers=1 \
+            -PbundleInDebug=true \
             -Dorg.gradle.jvmargs="-Xmx2g -XX:MaxMetaspaceSize=512m -XX:+UseG1GC" \
             2>&1 | tee /tmp/build-debug.log; exit ${PIPESTATUS[0]}
 
